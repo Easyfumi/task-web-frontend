@@ -1,11 +1,11 @@
 import './App.css'
-import HelloWorld from './HelloWorld'
+import ListTaskComponent from './components/ListTaskComponent'
 
 function App() {
 
   return (
     <>
-    <HelloWorld />
+    <ListTaskComponent />
     </>
   )
 }
