@@ -1,35 +1,17 @@
-import React from 'react'
+import React, {useEffect, useState} from 'react'
+import { listTasks } from '../services/TaskService'
 
 const ListTaskComponent = () => {
-   const dummyData = [
-      {
-         "id":1,
-         "nameOfTask": "task name1 ",
-         "description": "task desc1",
-         "day": 1,
-         "time": "12:35",
-         "email": "email@email.email"
-     },
-     {
-         "id":2,
-         "nameOfTask": "task name2 ",
-         "description": "task desc2",
-         "day": 2,
-         "time": "11:15",
-         "email": "email@email.email"
-      },
-      {
-         "id":3,
-         "nameOfTask": "task name3 ",
-         "description": "task desc3",
-         "day": 3,
-         "time": "17:55",
-         "email": "email@email.email"
-      }
-   ]
+   
+   const [tasks, setTasks] = useState([])
 
-
-
+   useEffect(() => {
+listTasks().then((response) => {
+   setTasks(response.data);
+}).catch(error => {
+   console.error(error);
+});
+   }, []);
 
   return (
     <div className='container'>
@@ -47,7 +29,7 @@ const ListTaskComponent = () => {
          </thead>
          <tbody>
             {
-               dummyData.map(task => 
+               tasks.map(task => 
                   <tr key = {task.id}>
                      <td>{task.id}</td>
                      <td>{task.nameOfTask}</td>
@@ -59,6 +41,7 @@ const ListTaskComponent = () => {
             }
          </tbody>
       </table>
+
 
 
 
