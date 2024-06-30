@@ -21,6 +21,10 @@ listTasks().then((response) => {
       navigator('/add-task')
    }
 
+   function updateTask(id) {
+      navigator(`/edit-task/${id}`)
+   }
+
   return (
     <div className='container'>
       <h2 className='text-center'>List of Tasks</h2>
@@ -34,6 +38,7 @@ listTasks().then((response) => {
                <th>Day</th>
                <th>Time</th>
                <th>Email</th>
+               <th>Actions</th>
             </tr>
          </thead>
          <tbody>
@@ -46,6 +51,9 @@ listTasks().then((response) => {
                      <td>{task.day}</td>
                      <td>{task.time}</td>
                      <td>{task.email}</td>
+                     <td>
+                        <button className='btn btn-info' onClick={() => updateTask(task.id)}>Update</button>
+                     </td>
                   </tr>)
             }
          </tbody>
