@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react'
-import { listTasks } from '../services/TaskService'
+import { deleteTask, listTasks } from '../services/TaskService'
 import { useNavigate } from 'react-router-dom'
 
 const ListTaskComponent = () => {
@@ -9,13 +9,16 @@ const ListTaskComponent = () => {
    const navigator = useNavigate()
 
    useEffect(() => {
-listTasks().then((response) => {
-   setTasks(response.data);
-}).catch(error => {
-   console.error(error);
-});
+   getAllTasks();
    }, []);
 
+   function getAllTasks() {
+      listTasks().then((response) => {
+         setTasks(response.data);
+      }).catch(error => {
+         console.error(error);
+      });
+   }
 
    function addNewTask() {
       navigator('/add-task')
@@ -23,6 +26,15 @@ listTasks().then((response) => {
 
    function updateTask(id) {
       navigator(`/edit-task/${id}`)
+   }
+
+   function removeTask(id) {
+      console.log(id);
+      deleteTask(id).then((response) => {
+         getAllTasks();
+      }).catch(error => {
+         console.error(error);
+      })
    }
 
   return (
@@ -53,6 +65,9 @@ listTasks().then((response) => {
                      <td>{task.email}</td>
                      <td>
                         <button className='btn btn-info' onClick={() => updateTask(task.id)}>Update</button>
+                        <button className='btn btn-danger' onClick={() => removeTask(task.id)}
+                           style={{marginLeft: '10px'}}
+                           >Delete</button>
                      </td>
                   </tr>)
             }
